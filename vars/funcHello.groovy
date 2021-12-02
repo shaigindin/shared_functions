@@ -3,4 +3,4 @@ import groovy.io.*
 
 
 @NonCPS
-echo "hello friends from function!";
+println("hello friends from function!");
