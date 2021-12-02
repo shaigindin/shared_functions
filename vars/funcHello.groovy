@@ -2,7 +2,7 @@ import java.io.*
 import groovy.io.*
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
-
+import groovy.json.JsonSlurperClassic 
 
 class A{
     String name;
@@ -15,6 +15,6 @@ def A funcHello(){
 
 @NonCPS
 def readConfigFile(String jsonText){
-    def jsonSlurper = new JsonSlurper()
+    def jsonSlurper = new JsonSlurperClassic()
     return new HashMap<>(jsonSlurper.parseText(jsonText))
 }
