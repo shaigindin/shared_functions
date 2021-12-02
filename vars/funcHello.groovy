@@ -13,9 +13,8 @@ def A funcHello(){
 	return new A(name:"moshe",age:"22");
 }
 
+@NonCPS
 def readConfigFile(String jsonText){
     def jsonSlurper = new JsonSlurper()
-    return jsonSlurper.parseText(jsonText)
-
-
+    return new HashMap<>(jsonSlurper.parseText(jsonText))
 }
