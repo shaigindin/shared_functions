@@ -17,7 +17,7 @@ def void readConfigFile(String filePath){
 //    def jsonSlurper = new JsonSlurper()
 //    File f = new File(filePath)
 //    return jsonSlurper.parseText(f.text)
-    print(filePath)
+    print(filePath.replaceAll("a","b"))
 }
 
-
+readConfigFile("s\\")
