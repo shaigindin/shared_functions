@@ -3,8 +3,10 @@ import groovy.io.*
 
 class A{
     String name;
-    int age;
+    String age;
 }
-def funcHello(){
-	return A("moshe",22);
+
+def A funcHello(){
+	return new A(name:"moshe",age:"22");
 }
+
