@@ -21,5 +21,5 @@ def readConfigFile(String jsonText){
 
 @NonCPS
 def createFile(file_path){
-    writeFile("${file_path}")
+    writeFile(file: file_path, text: "done")
 }
