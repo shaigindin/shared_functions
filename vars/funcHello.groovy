@@ -23,3 +23,7 @@ def readConfigFile(String jsonText){
 def createFile(file_path){
     writeFile(file: file_path, text: "done")
 }
+
+def blancStage(text){
+         stage("${text}"){}
+}
