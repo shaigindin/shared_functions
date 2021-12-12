@@ -18,3 +18,8 @@ def readConfigFile(String jsonText){
     def jsonSlurper = new JsonSlurperClassic()
     return new HashMap<>(jsonSlurper.parseText(jsonText))
 }
+
+@NonCPS
+def createFile(file_path){
+    touch(file_path)
+}
