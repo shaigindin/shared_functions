@@ -27,3 +27,10 @@ def createFile(file_path){
 def blancStage(text){
          stage("${text}"){}
 }
+
+def loadDependencies(dep_list){
+	for (name in dep_list ) {
+        	def repoTest = load "${env.WORKSPACE}/${name}/Jenkins/main.groovy"
+        	repoTest.main()
+    }
+}
