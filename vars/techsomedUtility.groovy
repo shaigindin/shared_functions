@@ -69,7 +69,8 @@ def prepareOneBuildStage(String name, String branch) {
 }
 
 def loadGitRepos(repos, branches){
-        buildStages = prepareBuildStages(repos,branches)
+        def runParallel = true
+		buildStages = prepareBuildStages(repos,branches)
         for (builds in buildStages) {
             if (runParallel) {
               parallel(builds)
