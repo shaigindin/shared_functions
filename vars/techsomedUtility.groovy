@@ -50,7 +50,8 @@ def prepareBuildStages(repos, branches) {
     for (pair in [repos, branches].transpose() ) {
       def name = "${pair[0]}"
       def branch = "${pair[1]}"
-      buildParallelMap.put(name, prepareOneBuildStage(name,branch))
+      println("WEEELOOO ${name} ${branch}")
+	  buildParallelMap.put(name, prepareOneBuildStage(name,branch))
     }
     buildStagesList.add(buildParallelMap)
   }
