@@ -24,13 +24,20 @@ def createFile(file_path){
     writeFile(file: file_path, text: "done")
 }
 
+@NonCPS
 def blancStage(text){
          stage("${text}"){}
 }
 
+@NonCPS
 def loadDependencies(dep_list){
 	for (name in dep_list ) {
         	def repoTest = load "${env.WORKSPACE}/${name}/Jenkins/main.groovy"
         	repoTest.main()
     }
+}
+
+@NonCPS
+def void finalize(repo_name){
+    writeFile(file: "${env.WORKSPACE}/${repo_name}/Jenkins/ready_${env.BUILD_NUMBER}.txt", text: "package was tested")
 }
