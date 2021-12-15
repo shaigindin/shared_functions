@@ -42,7 +42,7 @@ def void finalize(repo_name){
     writeFile(file: "${env.WORKSPACE}/${repo_name}/Jenkins/ready_${env.BUILD_NUMBER}.txt", text: "package was tested")
 }
 
-@NonCPS
+
 def prepareBuildStages(repos, branches) {
   def buildStagesList = []
   for (i=1; i<2; i++) {
@@ -58,7 +58,7 @@ def prepareBuildStages(repos, branches) {
   return buildStagesList
 }
 
-@NonCPS
+
 def prepareOneBuildStage(String name, String branch) {
   return {
     stage("Build stage:${name}") {
