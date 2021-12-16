@@ -109,5 +109,10 @@ def loadGitRepos(repos, branches){
         }
 }
 
+def tagRepo(repo_name){
+	assert (fileExists(file: "${env.WORKSPACE}/pycommon/.venv") && fileExists(file: "${env.WORKSPACE}/pycommon/misc/version_util.py"))
+	bat "${env.WORKSPACE}/pycommon/.venv/Scripts/activate && python version_util.py --command 3 --repo_path ${env.WORKSPACE}/${repo_name} --type python --jenkins_id ${currentBuild.number}"
+}
+
 
 
