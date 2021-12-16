@@ -4,6 +4,32 @@ import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurperClassic 
 import jenkins.model.Jenkins
+import hudson.EnvVars;
+import hudson.slaves.EnvironmentVariablesNodeProperty;
+import hudson.slaves.NodeProperty;
+import hudson.slaves.NodePropertyDescriptor;
+import hudson.util.DescribableList;
+import jenkins.model.Jenkins;
+public createGlobalEnvironmentVariables(String key, String value){
+ 
+       Jenkins instance = Jenkins.getInstance();
+ 
+       DescribableList<NodeProperty<?>, NodePropertyDescriptor> globalNodeProperties = instance.getGlobalNodeProperties();
+       List<EnvironmentVariablesNodeProperty> envVarsNodePropertyList = globalNodeProperties.getAll(EnvironmentVariablesNodeProperty.class);
+ 
+       EnvironmentVariablesNodeProperty newEnvVarsNodeProperty = null;
+       EnvVars envVars = null;
+ 
+       if ( envVarsNodePropertyList == null || envVarsNodePropertyList.size() == 0 ) {
+           newEnvVarsNodeProperty = new hudson.slaves.EnvironmentVariablesNodeProperty();
+           globalNodeProperties.add(newEnvVarsNodeProperty);
+           envVars = newEnvVarsNodeProperty.getEnvVars();
+       } else {
+           envVars = envVarsNodePropertyList.get(0).getEnvVars();
+       }
+       envVars.put(key, value)
+       instance.save()
+}
 
 class A{
     String name;
@@ -87,82 +113,3 @@ def loadGitRepos(repos, branches){
 
 
 
-def String getJobName(){
-	return "${env.JOB_NAME}"
-}
-
-
-/**
- * Change param value during build
- *
- * @param paramName new or existing param name
- * @param paramValue param value
- * @return nothing
- */
-def setParam(String paramName, String paramValue) {
-	List<ParameterValue> newParams = new ArrayList<>();
-	newParams.add(new StringParameterValue(paramName, paramValue))
-	try {
-		$build().addOrReplaceAction($build().getAction(ParametersAction.class).createUpdated(newParams))
-	} catch (err) {
-		$build().addOrReplaceAction(new ParametersAction(newParams))
-	}
-}
-
-/**
- * Add a new option to choice parameter for the current job
- *
- * @param paramName parameter name
- * @param optionValue option value
- * @return nothing
- */
-def addChoice(String paramName, String optionValue) {
-	addChoice($build().getParent(), paramName, optionValue)
-}
-
-/**
- * Add a new option to choice parameter to the given job
- *
- * @param paramName parameter name
- * @param optionValue option value
- * @return nothing
- */
-def addChoice(String jobName, String paramName, String optionValue) {
-	List jobNames = jobName.tokenize("/")
-	Job job = Jenkins.instance.getJob("daily_pipeline")
-
-	addChoice(job, paramName, optionValue)
-}
-
-/**
- * Add a new option to choice parameter to the given job
- * Will be added as the first (default) choice
- * @param job job object
- * @param paramName parameter name
- * @param optionValue option value
- * @return
- */
-def addChoice(Job job, String paramName, String optionValue) {
-	ParametersDefinitionProperty paramsJobProperty = job.getProperty(ParametersDefinitionProperty.class);
-	ChoiceParameterDefinition oldChoiceParam = (ChoiceParameterDefinition)paramsJobProperty.getParameterDefinition(paramName);
-	List<ParameterDefinition> oldJobParams = paramsJobProperty.getParameterDefinitions();
-	List<ParameterDefinition> newJobParams = new ArrayList<>();
-
-	for (ParameterDefinition p: oldJobParams) {
-		if (!p.getName().equals(paramName)) {
-			newJobParams.add(0,p);
-		}
-	}
-
-	List<String> choices = new ArrayList(oldChoiceParam.getChoices());
-
-
-	choices.add(0,optionValue);
-
-	ChoiceParameterDefinition newChoiceParam = new ChoiceParameterDefinition(paramName, choices, oldChoiceParam.getDefaultParameterValue().getValue(), oldChoiceParam.getDescription());
-	newJobParams.add(newChoiceParam);
-
-	ParametersDefinitionProperty newParamsJobProperty = new ParametersDefinitionProperty(newJobParams);
-	job.removeProperty(paramsJobProperty);
-	job.addProperty(newParamsJobProperty);
-}
