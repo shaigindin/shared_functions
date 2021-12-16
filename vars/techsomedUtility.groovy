@@ -12,7 +12,7 @@ import hudson.util.DescribableList;
 import jenkins.model.Jenkins;
 
 
-def createGlobalEnvironmentVariables( key, value){ 
+def createGlobalEnvironmentVariables(String key, String value){ 
        Jenkins instance = Jenkins.getInstance();
        DescribableList<NodeProperty<?>, NodePropertyDescriptor> globalNodeProperties = instance.getGlobalNodeProperties();
        List<EnvironmentVariablesNodeProperty> envVarsNodePropertyList = globalNodeProperties.getAll(EnvironmentVariablesNodeProperty.class);
