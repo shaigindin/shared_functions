@@ -43,7 +43,6 @@ def void finalize(repo_name){
 }
 
 
-
 def prepareBuildStages(repos, branches) {
   def buildStagesList = []
   for (i=1; i<2; i++) {
@@ -85,6 +84,13 @@ def loadGitRepos(repos, branches){
         }
 }
 
+
+
+def String getJobName(){
+	return "${env.JOB_NAME}"
+}
+
+
 /**
  * Change param value during build
  *
@@ -122,8 +128,7 @@ def addChoice(String paramName, String optionValue) {
  */
 def addChoice(String jobName, String paramName, String optionValue) {
 	List jobNames = jobName.tokenize("/")
-	Job job = (Jenkins.getInstance().getItem(jobNames[0])).getItem(jobNames[1]).getItem(jobNames[2])
-
+	Job job = Jenkins.instance.getJob(getJobName())
 	addChoice(job, paramName, optionValue)
 }
 
