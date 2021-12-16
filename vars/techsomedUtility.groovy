@@ -43,6 +43,19 @@ def void finalize(repo_name){
 }
 
 
+@NonCPS
+def addJenkinsProperty(key, value){
+	job = Jenkins.instance.getJob("${env.JOB_NAME}")
+
+    ParametersDefinitionProperty params = job.getProperty(ParametersDefinitionProperty.class);
+
+    List<ParameterDefinition> newParams = new ArrayList<>();
+    newParams.addAll(params.getParameterDefinitions());
+    newParams.add(new StringParameterDefinition(key, value));
+    job.removeProperty(params);
+    job.addProperty(new ParametersDefinitionProperty(newParams));
+}
+
 def prepareBuildStages(repos, branches) {
   def buildStagesList = []
   for (i=1; i<2; i++) {
