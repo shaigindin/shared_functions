@@ -128,7 +128,8 @@ def addChoice(String paramName, String optionValue) {
  */
 def addChoice(String jobName, String paramName, String optionValue) {
 	List jobNames = jobName.tokenize("/")
-	Job job = Jenkins.instance.getJob(getJobName())
+	Job job = JenkinsgetInstance().getItem(getJobName())
+
 	addChoice(job, paramName, optionValue)
 }
 
