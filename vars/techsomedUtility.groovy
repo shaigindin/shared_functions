@@ -47,7 +47,7 @@ def String getJonName(){
 }
 
 @NonCPS
-def addJenkinsProperty(String key, String value){
+def addJenkinsProperty(key, value){
 	job = Jenkins.instance.getJob(getJonName())
 
     ParametersDefinitionProperty params = job.getProperty(ParametersDefinitionProperty.class);
