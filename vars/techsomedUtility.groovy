@@ -122,7 +122,7 @@ def addChoice(String paramName, String optionValue) {
  */
 def addChoice(String jobName, String paramName, String optionValue) {
 	List jobNames = jobName.tokenize("/")
-	Job job = ((OrganizationFolder)Jenkins.getInstance().getItem(jobNames[0])).getItem(jobNames[1]).getItem(jobNames[2])
+	Job job = (Jenkins.getInstance().getItem(jobNames[0])).getItem(jobNames[1]).getItem(jobNames[2])
 
 	addChoice(job, paramName, optionValue)
 }
