@@ -3,6 +3,7 @@ import groovy.io.*
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurperClassic 
+import jenkins.model.Jenkins
 
 class A{
     String name;
