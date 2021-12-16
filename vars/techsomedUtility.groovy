@@ -42,10 +42,13 @@ def void finalize(repo_name){
     writeFile(file: "${env.WORKSPACE}/${repo_name}/Jenkins/ready_${env.BUILD_NUMBER}.txt", text: "package was tested")
 }
 
+def String getJonName(){
+	return "${env.JOB_NAME}"
+}
 
 @NonCPS
-def addJenkinsProperty(key, value){
-	job = Jenkins.instance.getJob("${env.JOB_NAME}")
+def addJenkinsProperty(String key, String value){
+	job = Jenkins.instance.getJob(getJonName())
 
     ParametersDefinitionProperty params = job.getProperty(ParametersDefinitionProperty.class);
 
