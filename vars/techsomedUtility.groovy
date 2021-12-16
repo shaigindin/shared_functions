@@ -54,7 +54,7 @@ def addJenkinsProperty(key, value){
 
     List<ParameterDefinition> newParams = new ArrayList<>();
     newParams.addAll(params.getParameterDefinitions());
-    newParams.add(new StringParameterDefinition(key, value));
+    newParams.add(new StringParameterDefinition("${key}", value));
     job.removeProperty(params);
     job.addProperty(new ParametersDefinitionProperty(newParams));
 }
