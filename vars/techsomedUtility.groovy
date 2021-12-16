@@ -42,22 +42,7 @@ def void finalize(repo_name){
     writeFile(file: "${env.WORKSPACE}/${repo_name}/Jenkins/ready_${env.BUILD_NUMBER}.txt", text: "package was tested")
 }
 
-def String getJonName(){
-	return "${env.JOB_NAME}"
-}
 
-@NonCPS
-def addJenkinsProperty(key, value){
-	job = Jenkins.instance.getJob(getJonName())
-
-    ParametersDefinitionProperty params = job.getProperty(ParametersDefinitionProperty.class);
-
-    List<ParameterDefinition> newParams = new ArrayList<>();
-    newParams.addAll(params.getParameterDefinitions());
-    newParams.add(new StringParameterDefinition("${key}", value));
-    job.removeProperty(params);
-    job.addProperty(new ParametersDefinitionProperty(newParams));
-}
 
 def prepareBuildStages(repos, branches) {
   def buildStagesList = []
@@ -98,4 +83,79 @@ def loadGitRepos(repos, branches){
               }
             }
         }
+}
+
+/**
+ * Change param value during build
+ *
+ * @param paramName new or existing param name
+ * @param paramValue param value
+ * @return nothing
+ */
+def setParam(String paramName, String paramValue) {
+	List<ParameterValue> newParams = new ArrayList<>();
+	newParams.add(new StringParameterValue(paramName, paramValue))
+	try {
+		$build().addOrReplaceAction($build().getAction(ParametersAction.class).createUpdated(newParams))
+	} catch (err) {
+		$build().addOrReplaceAction(new ParametersAction(newParams))
+	}
+}
+
+/**
+ * Add a new option to choice parameter for the current job
+ *
+ * @param paramName parameter name
+ * @param optionValue option value
+ * @return nothing
+ */
+def addChoice(String paramName, String optionValue) {
+	addChoice($build().getParent(), paramName, optionValue)
+}
+
+/**
+ * Add a new option to choice parameter to the given job
+ *
+ * @param paramName parameter name
+ * @param optionValue option value
+ * @return nothing
+ */
+def addChoice(String jobName, String paramName, String optionValue) {
+	List jobNames = jobName.tokenize("/")
+	Job job = ((OrganizationFolder)Jenkins.getInstance().getItem(jobNames[0])).getItem(jobNames[1]).getItem(jobNames[2])
+
+	addChoice(job, paramName, optionValue)
+}
+
+/**
+ * Add a new option to choice parameter to the given job
+ * Will be added as the first (default) choice
+ * @param job job object
+ * @param paramName parameter name
+ * @param optionValue option value
+ * @return
+ */
+def addChoice(Job job, String paramName, String optionValue) {
+	ParametersDefinitionProperty paramsJobProperty = job.getProperty(ParametersDefinitionProperty.class);
+	ChoiceParameterDefinition oldChoiceParam = (ChoiceParameterDefinition)paramsJobProperty.getParameterDefinition(paramName);
+	List<ParameterDefinition> oldJobParams = paramsJobProperty.getParameterDefinitions();
+	List<ParameterDefinition> newJobParams = new ArrayList<>();
+
+	for (ParameterDefinition p: oldJobParams) {
+		if (!p.getName().equals(paramName)) {
+			newJobParams.add(0,p);
+		}
+	}
+
+	List<String> choices = new ArrayList(oldChoiceParam.getChoices());
+
+
+	choices.add(0,optionValue);
+
+	ChoiceParameterDefinition newChoiceParam = new ChoiceParameterDefinition(paramName, choices, oldChoiceParam.getDefaultParameterValue().getValue(), oldChoiceParam.getDescription());
+	newJobParams.add(newChoiceParam);
+
+	ParametersDefinitionProperty newParamsJobProperty = new ParametersDefinitionProperty(newJobParams);
+	job.removeProperty(paramsJobProperty);
+	job.addProperty(newParamsJobProperty);
 }
