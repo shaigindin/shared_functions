@@ -75,7 +75,6 @@ def prepareBuildStages(repos, branches) {
     for (pair in [repos, branches].transpose() ) {
       def name = "${pair[0]}"
       def branch = "${pair[1]}"
-      println("WEEELOOO ${name} ${branch}")
 	  buildParallelMap.put(name, prepareOneBuildStage(name,branch))
     }
     buildStagesList.add(buildParallelMap)
@@ -87,9 +86,14 @@ def prepareBuildStages(repos, branches) {
 def prepareOneBuildStage(String name, String branch) {
   return {
     stage("Build stage:${name}") {
-        dir ("${name}"){
-           git branch: "${branch}", credentialsId: '30bac85c-db0f-430c-9cd0-6bd25f2eb01a', url: "http://rds:7990/scm/btng/${name}.git"
-        }
+checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: "${branch}"]],
+                            browser: [$class: 'BitbucketWeb', repoUrl: 'http://rds:7990'],
+                            doGenerateSubmoduleConfigurations: false,
+                            extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "${name}"], [$class: 'CleanBeforeCheckout']],
+                            submoduleCfg: [],
+                            userRemoteConfigs: [[credentialsId: '30bac85c-db0f-430c-9cd0-6bd25f2eb01a', url: 'http://rds:7990/scm/btng/"${name}".git']]])
     }
   }
 }
