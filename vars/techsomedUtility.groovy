@@ -93,7 +93,7 @@ checkout([
                             doGenerateSubmoduleConfigurations: false,
                             extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "${name}"], [$class: 'CleanBeforeCheckout']],
                             submoduleCfg: [],
-                            userRemoteConfigs: [[credentialsId: '30bac85c-db0f-430c-9cd0-6bd25f2eb01a', url: 'http://rds:7990/scm/btng/"${name}".git']]])
+                            userRemoteConfigs: [[credentialsId: '30bac85c-db0f-430c-9cd0-6bd25f2eb01a', url: "http://rds:7990/scm/btng/${name}".git']]])
     }
   }
 }
