@@ -88,7 +88,7 @@ def prepareOneBuildStage(String name, String branch) {
   return {
     stage("Build stage:${name}") {
         dir ("${name}"){
-           git branch: "${branch}", credentialsId: '30bac85c-db0f-430c-9cd0-6bd25f2eb01a', url: "http://shai@rds:7990/scm/btng/${name}.git"
+           git branch: "${branch}", credentialsId: '30bac85c-db0f-430c-9cd0-6bd25f2eb01a', url: "http://rds:7990/scm/btng/${name}.git"
         }
     }
   }
