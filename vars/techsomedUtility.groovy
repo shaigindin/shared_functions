@@ -85,7 +85,7 @@ def prepareBuildStages(repos, branches) {
 
 def prepareOneBuildStage(String name, String branch) {
   return {
-    stage("Build stage:${name}") {
+    stage("Build stage:${name} test") {
 checkout([
                             $class: 'GitSCM',
                             branches: [[name: "${branch}"]],
