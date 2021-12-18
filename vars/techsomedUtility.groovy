@@ -114,8 +114,8 @@ def loadGitRepos(repos, branches){
 }
 
 def tagRepo(paramMAp){
-	assert (fileExists(file: "${paramMAp.WORKSPACE}/pycommon/.venv") && fileExists(file: "${paramMAp.WORKSPACE}/pycommon/misc/version_util.py"))
-	bat "${paramMAp.WORKSPACE}/pycommon/.venv/Scripts/activate && python ${paramMAp.WORKSPACE}/pycommon/misc/version_util.py --command 3 --repo_path ${env.WORKSPACE}/${repo_name} --type python --jenkins_id ${currentBuild.number}"
+	assert (fileExists(file: "C:/jenkins_temp_server_new/out/workspace/nightly_pipeline/pycommon/.venv") && fileExists(file: "C:/jenkins_temp_server_new/out/workspace/nightly_pipeline/pycommon/pycommon/misc/version_util.py"))
+	bat "C:/jenkins_temp_server_new/out/workspace/nightly_pipeline/pycommon/.venv/Scripts/activate && python C:/jenkins_temp_server_new/out/workspace/nightly_pipeline/pycommon/misc/version_util.py --command 3 --repo_path C:/jenkins_temp_server_new/out/workspace/nightly_pipeline/pycommon --type python --jenkins_id ${currentBuild.number}"
 }
 
 
