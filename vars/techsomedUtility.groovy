@@ -41,7 +41,7 @@ def A funcHello(){
 @NonCPS
 def readConfigFile(String jsonText){
     def jsonSlurper = new JsonSlurperClassic()
-    return new HashMap<>(jsonSlurper.parseText(jsonText))
+    return new List<>(jsonSlurper.parseText(jsonText))
 }
 
 @NonCPS
