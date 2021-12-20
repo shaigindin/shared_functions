@@ -10,7 +10,7 @@ import hudson.slaves.NodeProperty;
 import hudson.slaves.NodePropertyDescriptor;
 import hudson.util.DescribableList;
 import jenkins.model.Jenkins;
-
+import java.nio.file.Paths
 
 def createGlobalEnvironmentVariables(String key, String value){ 
        Jenkins instance = Jenkins.getInstance();
@@ -38,6 +38,9 @@ def A funcHello(){
 	return new A(name:"moshe",age:"22");
 }
 
+def joinPaths(a,b){
+	return Paths.get(a,b)
+}
 @NonCPS
 def readConfigFile(String jsonText){
     def jsonSlurper = new JsonSlurperClassic()
