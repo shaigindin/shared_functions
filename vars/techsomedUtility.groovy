@@ -50,12 +50,10 @@ def readConfigFile(String jsonText){
 
 def cleanIt(paramMAp, dependencies){
 	def output = bat returnStdout: true, script: "dir \"${paramMAp.WORKSPACE}\" /b /A:D"
-	println(output)
 	foldersList = output.tokenize('\n').collect() { it.trim() }
 	foldersList = foldersList.drop(2)
-	print(foldersList)
 	def cleanDependencies = (0..dependencies.size()-1).findAll(
-                       { foldersList.contains(dependencies[it])}).collect { dependencies[it] }
+                       { !foldersList.contains(dependencies[it])}).collect { dependencies[it] }
     println(cleanDependencies)
 }
 
