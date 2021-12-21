@@ -125,7 +125,7 @@ checkout([
 def tagRepo(paramMAp, repo_name, package_type){
 	// assert (fileExists(file: "${paramMAp.WORKSPACE}/pycommon/.venv") && fileExists(file: "${env.WORKSPACE}/pycommon/misc/version_util.py"))
 	withCredentials([gitUsernamePassword(credentialsId: '30bac85c-db0f-430c-9cd0-6bd25f2eb01a', gitToolName: 'git-tool')]) {
-        bat "python ${paramMAp.WORKSPACE}/pycommon/misc/version_util.py --command 3 --repo_path ${paramMAp.WORKSPACE}/${repo_name} --type ${package_type} --jenkins_id ${currentBuild.number}"
+        bat(script: "python ${paramMAp.WORKSPACE}/pycommon/misc/version_util.py --command 3 --repo_path ${paramMAp.WORKSPACE}/${repo_name} --type ${package_type} --jenkins_id ${currentBuild.number}", label : "tag ${repo_name} repository")
     }
 }
 
