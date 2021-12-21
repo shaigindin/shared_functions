@@ -55,13 +55,13 @@ def getFoldersFromPath(path){
 
 def filterLoadRepos(paramMAp, dependencies){
 	foldersList = getFoldersFromPath(paramMAp.WORKSPACE)
-	ls = []
+	def repos = []
 	for (i=0; i < dependencies.size(); i++){
 		if(fileExists(file: "${paramMAp.WORKSPACE}/${dependencies[it]}/Jenkins/ready_${paramMAp.BUILD_NUMBER}.txt"){
-			ls.add(dependencies[i)
+			repos.add(dependencies[i])
 		}
 	}
-	return ls
+	return repos
 }
 //	return (0..dependencies.size()-1).findAll(
 //                      { )}).collect { dependencies[it] }
