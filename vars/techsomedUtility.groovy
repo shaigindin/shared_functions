@@ -47,11 +47,14 @@ def readConfigFile(String jsonText){
     return new ArrayList<>(jsonSlurper.parseText(jsonText))
 }
 
+def getFoldersFromPath(path){
+	def output = bat returnStdout: true, script: "dir \"${path}\" /b /A:D"
+	foldersList = output.tokenize('\n').collect() { it.trim() }
+	return foldersList.drop(2) 
+}
 
 def cleanIt(paramMAp, dependencies){
-	def output = bat returnStdout: true, script: "dir \"${paramMAp.WORKSPACE}\" /b /A:D"
-	foldersList = output.tokenize('\n').collect() { it.trim() }
-	foldersList = foldersList.drop(2)
+	foldersList = getFoldersFromPath(paramMAp.WORKSPACE)
 	def cleanDependencies = (0..dependencies.size()-1).findAll(
                        { !foldersList.contains(dependencies[it])}).collect { dependencies[it] }
     println(cleanDependencies)
