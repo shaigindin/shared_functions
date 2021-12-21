@@ -57,15 +57,12 @@ def filterLoadRepos(paramMAp, dependencies){
 	foldersList = getFoldersFromPath(paramMAp.WORKSPACE)
 	def repos = []
 	for (i=0; i < dependencies.size(); i++){
-		if(fileExists(file: "${paramMAp.WORKSPACE}/${dependencies[it]}/Jenkins/ready_${paramMAp.BUILD_NUMBER}.txt"){
+		if(fileExists(file: "${paramMAp.WORKSPACE}/${dependencies[i]}/Jenkins/ready_${paramMAp.BUILD_NUMBER}.txt"){
 			repos.add(dependencies[i])
 		}
 	}
 	return repos
 }
-//	return (0..dependencies.size()-1).findAll(
-//                      { )}).collect { dependencies[it] }
-
 
 @NonCPS
 def createFile(file_path){
