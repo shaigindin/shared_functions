@@ -52,10 +52,10 @@ def cleanIt(paramMAp, dependencies){
 	def output = bat returnStdout: true, script: "dir \"${paramMAp.WORKSPACE}\" /b /A:D"
 	foldersList = output.tokenize('\n').collect() { it }
 	foldersList = foldersList.drop(2)
-	println(foldersList)
-	// def cleanDependencies = (0..dependencies.size()-1).findAll(
-    //                   { fileExists(file: "${paramMAp.WORKSPACE}/${dependencies[it]}") }).collect { dependencies[it] }
-    // println(cleanDependencies)
+	print(foldersList)
+	def cleanDependencies = (0..dependencies.size()-1).findAll(
+                       { foldersList.contains(dependencies[it])}).collect { dependencies[it] }
+    println(cleanDependencies)
 }
 
 @NonCPS
