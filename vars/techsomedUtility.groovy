@@ -50,6 +50,7 @@ def readConfigFile(String jsonText){
 
 def cleanIt(paramMAp, dependencies){
     dlist = []
+	println("${paramMAp.WORKSPACE}")
 	new File("${paramMAp.WORKSPACE}").eachDir {dlist << it.name }
 	println(dlist)
 	// def cleanDependencies = (0..dependencies.size()-1).findAll(
