@@ -55,9 +55,8 @@ def getFoldersFromPath(path){
 
 def cleanIt(paramMAp, dependencies){
 	foldersList = getFoldersFromPath(paramMAp.WORKSPACE)
-	def cleanDependencies = (0..dependencies.size()-1).findAll(
+	return (0..dependencies.size()-1).findAll(
                        { !foldersList.contains(dependencies[it])}).collect { dependencies[it] }
-    println(cleanDependencies)
 }
 
 @NonCPS
