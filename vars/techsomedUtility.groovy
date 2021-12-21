@@ -50,6 +50,7 @@ def readConfigFile(String jsonText){
 
 def cleanIt(paramMAp, dependencies){
 	def output = bat returnStdout: true, script: "dir \"${paramMAp.WORKSPACE}\" /b /A:D"
+	println(output)
 	foldersList = output.tokenize('\n').collect() { it }
 	foldersList = foldersList.drop(2)
 	print(foldersList)
