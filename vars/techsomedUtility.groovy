@@ -53,7 +53,7 @@ def getFoldersFromPath(path){
 	return foldersList.drop(2) 
 }
 
-def filterLoadrdRepos(paramMAp, dependencies){
+def filterLoadRepos(paramMAp, dependencies){
 	foldersList = getFoldersFromPath(paramMAp.WORKSPACE)
 	return (0..dependencies.size()-1).findAll(
                        { !foldersList.contains(dependencies[it])}).collect { dependencies[it] }
