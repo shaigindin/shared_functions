@@ -47,6 +47,7 @@ def readConfigFile(String jsonText){
     return new ArrayList<>(jsonSlurper.parseText(jsonText))
 }
 
+@NonCPS
 def cleanIt(paramMAp, dependencies){
     def cleanDependencies = (0..dependencies.size()-1).findAll(
                         { fileExists(file: "${paramMAp.WORKSPACE}/${dependencies[it]}") }).collect { dependencies[it] }
