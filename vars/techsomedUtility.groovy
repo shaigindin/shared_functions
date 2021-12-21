@@ -97,7 +97,7 @@ def prepareBuildStages(repos, branches) {
 	for (i=0; i<repos.size(); i++) {
 		def name = repos[i]
 		def branch = branches["${name}"]
-		buildParallelMap.put(name, prepareOneBuildStage(name,branch))
+		buildParallelMap.put("Git Check: ${name} test", prepareOneBuildStage(name,branch))
     }
     buildStagesList.add(buildParallelMap)
   }
