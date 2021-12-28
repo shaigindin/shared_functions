@@ -130,9 +130,11 @@ def tagRepo(paramMAp, repo_name, package_type){
 }
 
 
-def createVenvCpp(paramMAp,repoName){
+def createVenvCpp(paramMAp, repoName){
     stage('CppTDM: Prepare Env'){
-        if (paramMAp.SET_VERSION_BUILD_NUMBER){
+        println("YAAAAYYY:")
+		print(paramMAp)
+		if (paramMAp.SET_VERSION_BUILD_NUMBER){
 			print("param baby")
 		}
 		else{
