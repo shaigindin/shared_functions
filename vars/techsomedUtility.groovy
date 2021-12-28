@@ -130,4 +130,15 @@ def tagRepo(paramMAp, repo_name, package_type){
 }
 
 
+def createVenvCpp(paramMAp,repoName){
+    stage('CppTDM: Prepare Env'){
+        buildParam = (paramMAp.SET_VERSION_BUILD_NUMBER) ? "--version_build_number ${currentBuild.number}" : ""
+        bat "python ${paramMAp.WORKSPACE}/pycommon/misc/version_util.py " +
+        "--command 2 --repo_path ${paramMAp.WORKSPACE}/${repoName} --type cpp ${buildParam}"
+        bat "cd ${paramMAp.WORKSPACE}/${repoName} && python cmake_generate.py --delete --andbuild"
+     }
+}
+
+
+
 
