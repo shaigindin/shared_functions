@@ -156,4 +156,7 @@ def createVenvPy(paramMAp, repoName){
     }
 }
 
+def is_repo_built(paramMAp, repo_name){
+	return fileExists(file: "${paramMAp.WORKSPACE}/${repo_name}/Jenkins/ready_${paramMAp.BUILD_NUMBER}.txt")
+}
 
