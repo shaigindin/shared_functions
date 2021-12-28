@@ -132,14 +132,6 @@ def tagRepo(paramMAp, repo_name, package_type){
 
 def createVenvCpp(paramMAp, repoName){
     stage('CppTDM: Prepare Env'){
-        println("YAAAAYYY:")
-		print(paramMAp)
-		if (paramMAp.SET_VERSION_BUILD_NUMBER){
-			print("param baby")
-		}
-		else{
-			print("not param baby")
-		}
 		buildParam = (paramMAp.SET_VERSION_BUILD_NUMBER) ? "--version_build_number ${currentBuild.number}" : " "
         bat "python ${paramMAp.WORKSPACE}/pycommon/misc/version_util.py " +
         "--command 2 --repo_path ${paramMAp.WORKSPACE}/${repoName} --type cpp ${buildParam}"
