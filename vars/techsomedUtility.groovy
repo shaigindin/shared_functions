@@ -140,7 +140,7 @@ def createVenvCpp(paramMAp, repoName){
 }
 
 def createVenvPy(paramMAp, repoName){
-    stage('PyTDM: Prepare Env'){
+    stage("${repoName}: Prepare Env"){
         if(paramMAp.SET_VERSION_BUILD_NUMBER){
             bat "python ${paramMAp.WORKSPACE}/pycommon/misc/version_util.py --command 2 --repo_path ${paramMAp.WORKSPACE}/${repoName} --type python --version_build_number ${currentBuild.number}"
         }
