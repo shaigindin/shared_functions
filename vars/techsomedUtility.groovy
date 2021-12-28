@@ -152,7 +152,7 @@ def createVenvPy(paramMAp, repoName){
         if(paramMAp.SET_VERSION_BUILD_NUMBER){
             bat "python ${paramMAp.WORKSPACE}/pycommon/misc/version_util.py --command 2 --repo_path ${paramMAp.WORKSPACE}/${repoName} --type python --version_build_number ${currentBuild.number}"
         }
-        bat "python ${paramMAp.WORKSPACE}/pycommon/misc/venv_creator.py -s ${paramMAp.WORKSPACE}/pytdm"
+        bat "python ${paramMAp.WORKSPACE}/pycommon/misc/venv_creator.py -s ${paramMAp.WORKSPACE}/${repoName}"
     }
 }
 
