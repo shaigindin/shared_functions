@@ -132,13 +132,26 @@ def tagRepo(paramMAp, repo_name, package_type){
 
 def createVenvCpp(paramMAp,repoName){
     stage('CppTDM: Prepare Env'){
-        buildParam = (paramMAp.SET_VERSION_BUILD_NUMBER) ? "--version_build_number ${currentBuild.number}" : ""
+        if (paramMAp.SET_VERSION_BUILD_NUMBER){
+			print("param baby")
+		}
+		else{
+			print("not param baby")
+		}
+		buildParam = (paramMAp.SET_VERSION_BUILD_NUMBER) ? "--version_build_number ${currentBuild.number}" : " "
         bat "python ${paramMAp.WORKSPACE}/pycommon/misc/version_util.py " +
         "--command 2 --repo_path ${paramMAp.WORKSPACE}/${repoName} --type cpp ${buildParam}"
         bat "cd ${paramMAp.WORKSPACE}/${repoName} && python cmake_generate.py --delete --andbuild"
      }
 }
 
-
+def createVenvPy(paramMAp, repoName){
+    stage('PyTDM: Prepare Env'){
+        if(paramMAp.SET_VERSION_BUILD_NUMBER){
+            bat "python ${paramMAp.WORKSPACE}/pycommon/misc/version_util.py --command 2 --repo_path ${paramMAp.WORKSPACE}/${repoName} --type python --version_build_number ${currentBuild.number}"
+        }
+        bat "python ${paramMAp.WORKSPACE}/pycommon/misc/venv_creator.py -s ${paramMAp.WORKSPACE}/pytdm"
+    }
+}
 
 
